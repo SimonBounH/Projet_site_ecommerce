@@ -1,8 +1,8 @@
-package com.intiformation.siteecommerce.dao;
+package com.intiformation.siteecommerce.service;
 
 import com.intiformation.siteecommerce.modele.User;
 
-public interface IBoutiqueDAO {
+public interface IAdminCategoriesMetier {
 	
 	public void ajouterUser(User u);
 
