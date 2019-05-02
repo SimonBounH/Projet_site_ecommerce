@@ -51,6 +51,15 @@
 		</property>
 	</bean>
 	
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<!-- ++++++++++++++  Déclaration du bean de la couche DAO   +++++++++++++++++++++++++++++++++++++ -->
+	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+	<bean id="boutiqueDaoBean" class="com.intiformation.siteecommerce.dao.BoutiqueDAOImpl">
+	
+		<!-- injection du bean de la sessionFactory dans la prop 'sessionFactory' du bean dao -->
+		<property name="sessionFactory" ref="sessionFactoryBean"/>
+	</bean>
+	
 	<!-- ============================================================================ -->
 	<!-- ++++++++ Déclaration du gestionnaire des transactions de spring ++++++++++++ -->
 	<!-- ============================================================================ -->
@@ -66,4 +75,6 @@
 	<!-- ++++++++ Activer la détection des anntations pour les transactions (@Transactionnel)++++++++++++ -->
 	<!-- =============================================================================================== -->
 	<tx:annotation-driven transaction-manager="transactionManagerBean"/>
+	
+	
 </beans>

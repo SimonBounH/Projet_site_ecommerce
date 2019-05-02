@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.intiformation.siteecommerce.modele.Categorie;
 import com.intiformation.siteecommerce.modele.Client;
@@ -19,7 +20,7 @@ import com.intiformation.siteecommerce.modele.User;
  * @author IN-MP-003
  *
  */
-@Repository
+@Repository("boutiqueDaoBean")
 public class BoutiqueDAOImpl implements IBoutiqueDAO {
 
 	// déclaration de la session factory d'hibernate
@@ -35,28 +36,32 @@ public class BoutiqueDAOImpl implements IBoutiqueDAO {
 		this.sessionFactory = sessionFactory;
 	}
 	
-	
+	@Transactional
 	@Override
 	public Long ajouterCategorie(Categorie c) {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(c);
 		return null;
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public List<Categorie> listCategorie() {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession()
+	             .createQuery("FROM categorie")
+	             .list();
 	}
 
+	@Transactional(readOnly=true)
 	@Override
 	public Categorie getCategorie(Long idCat) {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession()
+				.get(Categorie.class, idCat);
 	}
 
+	@Transactional
 	@Override
 	public void supprimerCategrorie(Long idcat) {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().delete(idcat);
 		
 	}
 
