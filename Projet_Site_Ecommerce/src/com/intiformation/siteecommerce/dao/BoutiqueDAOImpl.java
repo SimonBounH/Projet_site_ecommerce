@@ -66,16 +66,17 @@ public class BoutiqueDAOImpl implements IBoutiqueDAO {
 		sessionFactory.getCurrentSession().delete(idcat);
 		
 	}
-
+	
+	@Transactional
 	@Override
 	public void modifierCategorie(Categorie c) {
-		// TODO Auto-generated method stub
-		
+		sessionFactory.getCurrentSession().update(c);	
 	}
 
 	@Override
 	public Long ajouterProduit(Produit p, Long idCat) {
-		// TODO Auto-generated method stub
+		
+											
 		return null;
 	}
 
