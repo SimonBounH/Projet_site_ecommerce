@@ -1,6 +1,6 @@
 package com.intiformation.siteecommerce.dao;
 
-<<<<<<< HEAD
+
 import java.util.List;
 
 import com.intiformation.siteecommerce.modele.Categorie;
@@ -30,12 +30,4 @@ public interface IBoutiqueDAO {
 	public void attribuerRole(Role r, Long userID);
 	public Commande enregistrerCommande(Panier p, Client c);
 	
-=======
-import com.intiformation.siteecommerce.modele.User;
-
-public interface IBoutiqueDAO {
-	
-	public void ajouterUser(User u);
-
->>>>>>> branch 'master' of https://github.com/SimonBounH/Projet_site_ecommerce.git
 }
