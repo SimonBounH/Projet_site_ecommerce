@@ -1,5 +1,6 @@
 package com.intiformation.siteecommerce.dao;
 
+<<<<<<< HEAD
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -135,6 +136,36 @@ public class BoutiqueDAOImpl implements IBoutiqueDAO {
 	public Commande enregistrerCommande(Panier p, Client c) {
 		// TODO Auto-generated method stub
 		return null;
+=======
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.intiformation.siteecommerce.modele.User;
+
+@Repository
+public class BoutiqueDAOImpl implements IBoutiqueDAO {
+
+	// déclaration de la session factory d'hibernate
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	/**
+	 * setter pour injection spring <br/>
+	 * 
+	 * @param sessionFactory
+	 */
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	@Override
+	@Transactional
+	public void ajouterUser(User u) {
+		sessionFactory.getCurrentSession().save(u);
+
+>>>>>>> branch 'master' of https://github.com/SimonBounH/Projet_site_ecommerce.git
 	}
 
 }
