@@ -17,6 +17,7 @@ import javax.persistence.Table;
 @Entity (name="produit")
 @Table(name="produits")
 public class Produit implements Serializable {
+	
 @Id
 @GeneratedValue(strategy=GenerationType.IDENTITY)
 @Column (name = "id_produit")
