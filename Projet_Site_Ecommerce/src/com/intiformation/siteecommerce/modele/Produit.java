@@ -1,33 +1,33 @@
 package com.intiformation.siteecommerce.modele;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity(name = "produit")
 @Table(name = "produits")
 public class Produit implements Serializable {
 
+	/*____________________PROPS__________________________*/
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_produit")
 	private Long idProduit;
+	
 	@Column(name = "designation")
 	private String designation;
+	
 	@Column(name = "description")
 	private String description;
+	
 	@Column(name = "prix")
 	private double prix;
-	@Column(name = "quantite")
-	private int quantite;
 
 	@Column(name = "selected")
 	private boolean selected;
@@ -35,51 +35,46 @@ public class Produit implements Serializable {
 	@Column(name = "photo")
 	private String photo;
 	
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "categorie_id")
+	//Association
 	private Categorie categorie;
+	
+	private List<Commande> listeCommande;
+	
+	private LigneCommande ligneCommande;
 
+	/*____________________CTOR__________________________*/
 	public Produit() {
 		super();
 	}
 
-	public Produit(Long idProduit, String designation, String description, double prix, int quantite, boolean selected,
-			String photo, Categorie categorie) {
+	public Produit(String designation, String description, double prix, boolean selected, String photo,
+			Categorie categorie, List<Commande> listeCommande, LigneCommande ligneCommande) {
+		super();
+		this.designation = designation;
+		this.description = description;
+		this.prix = prix;
+		this.selected = selected;
+		this.photo = photo;
+		this.categorie = categorie;
+		this.listeCommande = listeCommande;
+		this.ligneCommande = ligneCommande;
+	}
+
+	public Produit(Long idProduit, String designation, String description, double prix, boolean selected, String photo,
+			Categorie categorie, List<Commande> listeCommande, LigneCommande ligneCommande) {
 		super();
 		this.idProduit = idProduit;
 		this.designation = designation;
 		this.description = description;
 		this.prix = prix;
-		this.quantite = quantite;
 		this.selected = selected;
 		this.photo = photo;
 		this.categorie = categorie;
+		this.listeCommande = listeCommande;
+		this.ligneCommande = ligneCommande;
 	}
 
-	public Produit(String designation, String description, double prix, int quantite, boolean selected, String photo,
-			Categorie categorie) {
-		super();
-		this.designation = designation;
-		this.description = description;
-		this.prix = prix;
-		this.quantite = quantite;
-		this.selected = selected;
-		this.photo = photo;
-		this.categorie = categorie;
-
-	}
-
-	public Produit(String designation, String description, double prix, int quantite, boolean selected, String photo) {
-		super();
-		this.designation = designation;
-		this.description = description;
-		this.prix = prix;
-		this.quantite = quantite;
-		this.selected = selected;
-		this.photo = photo;
-	}
-
+	/*____________________ENCAPSULATION__________________________*/
 	public Long getIdProduit() {
 		return idProduit;
 	}
@@ -112,14 +107,6 @@ public class Produit implements Serializable {
 		this.prix = prix;
 	}
 
-	public int getQuantite() {
-		return quantite;
-	}
-
-	public void setQuantite(int quantite) {
-		this.quantite = quantite;
-	}
-
 	public boolean isSelected() {
 		return selected;
 	}
@@ -144,13 +131,20 @@ public class Produit implements Serializable {
 		this.categorie = categorie;
 	}
 
-	
-	
-	@Override
-	public String toString() {
-		return "Produit [idProduit=" + idProduit + ", designation=" + designation + ", description=" + description
-				+ ", prix=" + prix + ", quantite=" + quantite + ", selected=" + selected + ", photo=" + photo
-				+ ", categorie=" + categorie + "]";
+	public List<Commande> getListeCommande() {
+		return listeCommande;
+	}
+
+	public void setListeCommande(List<Commande> listeCommande) {
+		this.listeCommande = listeCommande;
+	}
+
+	public LigneCommande getLigneCommande() {
+		return ligneCommande;
+	}
+
+	public void setLigneCommande(LigneCommande ligneCommande) {
+		this.ligneCommande = ligneCommande;
 	}
 
 }

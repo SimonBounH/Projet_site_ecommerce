@@ -1,14 +1,13 @@
 package com.intiformation.siteecommerce.modele;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity (name="client")
@@ -20,37 +19,45 @@ public class Client implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column (name = "id_client")
 	private long idClient;
+	
 	@Column (name = "nom_client")
 	private String nomClient;
+	
 	@Column (name = "adresse")
 	private String adresse;
+	
 	@Column (name = "email")
 	private String email;
+	
 	@Column (name = "telephone")
 	private String tel;
 	
-	@OneToMany(mappedBy =  "client")
-	private Collection<Commande>  commandes;
+	//Association
+	private List<Commande>  listeCommandes;
+	
 	/*____________________CTOR__________________________*/
 	public Client() {
 		super();
 	}
 
-	public Client(String nomClient, String adresse, String email, String tel) {
+	public Client(String nomClient, String adresse, String email, String tel, List<Commande> listeCommandes) {
 		super();
 		this.nomClient = nomClient;
 		this.adresse = adresse;
 		this.email = email;
 		this.tel = tel;
+		this.listeCommandes = listeCommandes;
 	}
 
-	public Client(long idClient, String nomClient, String adresse, String email, String tel) {
+	public Client(long idClient, String nomClient, String adresse, String email, String tel,
+			List<Commande> listeCommandes) {
 		super();
 		this.idClient = idClient;
 		this.nomClient = nomClient;
 		this.adresse = adresse;
 		this.email = email;
 		this.tel = tel;
+		this.listeCommandes = listeCommandes;
 	}
 	
 	/*____________________ENCAPSULATION__________________________*/
@@ -61,7 +68,6 @@ public class Client implements Serializable {
 	public void setIdClient(long idClient) {
 		this.idClient = idClient;
 	}
-
 
 	public String getNomClient() {
 		return nomClient;
@@ -95,16 +101,12 @@ public class Client implements Serializable {
 		this.tel = tel;
 	}
 
-	public Collection<Commande> getCommandes() {
-		return commandes;
+	public List<Commande> getListeCommandes() {
+		return listeCommandes;
 	}
 
-	public void setCommandes(Collection<Commande> commandes) {
-		this.commandes = commandes;
+	public void setListeCommandes(List<Commande> listeCommandes) {
+		this.listeCommandes = listeCommandes;
 	}
 
-
-	
-	
-	
 }

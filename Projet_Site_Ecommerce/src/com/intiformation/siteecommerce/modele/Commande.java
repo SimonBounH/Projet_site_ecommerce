@@ -1,18 +1,14 @@
 package com.intiformation.siteecommerce.modele;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,39 +16,54 @@ import javax.persistence.TemporalType;
 @Entity(name = "commande")
 @Table(name = "commandes")
 public class Commande implements Serializable {
+	
+	/*____________________PROPS__________________________*/
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_commande")
-	private Long idCommande;
+	private long idCommande;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "date_commande")
 	private Date dateCommande;
-	@OneToMany(mappedBy = "commande")
-	private Collection<LigneCommande> items;
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "client_id")
+	
+	//Association
+	private List<LigneCommande> listeLigneCommande;
+	
 	private Client client;
+	
+	private List<Produit> listeProduit;
 
-	public Commande(Long idCommande, Date dateCommande) {
-		super();
-		this.idCommande = idCommande;
-		this.dateCommande = dateCommande;
-	}
-
-	public Commande(Date dateCommande) {
-		super();
-		this.dateCommande = dateCommande;
-	}
-
+	/*____________________CTOR__________________________*/
 	public Commande() {
 		super();
 	}
 
-	public Long getIdCommande() {
+	public Commande(Date dateCommande, List<LigneCommande> listeLigneCommande, Client client,
+			List<Produit> listeProduit) {
+		super();
+		this.dateCommande = dateCommande;
+		this.listeLigneCommande = listeLigneCommande;
+		this.client = client;
+		this.listeProduit = listeProduit;
+	}
+
+	public Commande(long idCommande, Date dateCommande, List<LigneCommande> listeLigneCommande, Client client,
+			List<Produit> listeProduit) {
+		super();
+		this.idCommande = idCommande;
+		this.dateCommande = dateCommande;
+		this.listeLigneCommande = listeLigneCommande;
+		this.client = client;
+		this.listeProduit = listeProduit;
+	}
+
+	/*____________________ENCAPSULATION__________________________*/
+	public long getIdCommande() {
 		return idCommande;
 	}
 
-	public void setIdCommande(Long idCommande) {
+	public void setIdCommande(long idCommande) {
 		this.idCommande = idCommande;
 	}
 
@@ -64,12 +75,12 @@ public class Commande implements Serializable {
 		this.dateCommande = dateCommande;
 	}
 
-	public Collection<LigneCommande> getItems() {
-		return items;
+	public List<LigneCommande> getListeLigneCommande() {
+		return listeLigneCommande;
 	}
 
-	public void setItems(Collection<LigneCommande> items) {
-		this.items = items;
+	public void setListeLigneCommande(List<LigneCommande> listeLigneCommande) {
+		this.listeLigneCommande = listeLigneCommande;
 	}
 
 	public Client getClient() {
@@ -80,4 +91,12 @@ public class Commande implements Serializable {
 		this.client = client;
 	}
 
+	public List<Produit> getListeProduit() {
+		return listeProduit;
+	}
+
+	public void setListeProduit(List<Produit> listeProduit) {
+		this.listeProduit = listeProduit;
+	}
+	
 }

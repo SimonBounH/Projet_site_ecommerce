@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.intiformation.siteecommerce.modele.Categorie;
 import com.intiformation.siteecommerce.modele.Client;
 import com.intiformation.siteecommerce.modele.Commande;
+import com.intiformation.siteecommerce.modele.Panier;
 import com.intiformation.siteecommerce.modele.Produit;
 import com.intiformation.siteecommerce.modele.Role;
 import com.intiformation.siteecommerce.modele.User;
@@ -36,122 +37,137 @@ public class BoutiqueDAOImpl implements IBoutiqueDAO {
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
+
+	/*________________________________________________________*/
+	/*_________________________ Catégorie ____________________*/
+	/*________________________________________________________*/
 	
-	@Transactional
 	@Override
+	@Transactional
 	public void ajouterCategorie(Categorie c) {
 		sessionFactory.getCurrentSession().save(c);
-		
 	}
 
-	@Transactional(readOnly=true)
 	@Override
-	public List<Categorie> listCategorie() {
-		return sessionFactory.getCurrentSession()
-	             .createQuery("FROM categorie")
-	             .list();
-	}
-
-	@Transactional(readOnly=true)
-	@Override
-	public Categorie getCategorie(Long idCat) {
-		return sessionFactory.getCurrentSession()
-				.get(Categorie.class, idCat);
-	}
-
 	@Transactional
-	@Override
-	public void supprimerCategrorie(Long idcat) {
-		sessionFactory.getCurrentSession().delete(getCategorie(idcat));
-		
-	}
-	
-	@Transactional
-	@Override
 	public void modifierCategorie(Categorie c) {
-		sessionFactory.getCurrentSession().update(c);	
+		sessionFactory.getCurrentSession().update(c);
 	}
 
 	@Override
-	public Long ajouterProduit(Produit p, Long idCat) {
-		
-		p = new Produit(p.getDesignation(), p.getDescription(), p.getPrix(), p.getQuantite(), p.isSelected(), p.getPhoto(), getCategorie(idCat));
-				
-		sessionFactory.getCurrentSession().save(p);							
-		return null;
+	@Transactional
+	public void supprimerCategrorie(long idCat) {
+		sessionFactory.getCurrentSession().delete(getCategorie(idCat));
 	}
 
 	@Override
-	public List<Produit> listproduits() {
-		
-		return sessionFactory.getCurrentSession()
-	             .createQuery("FROM produit")
-	             .list();
+	@Transactional
+	public Categorie getCategorie(long idCat) {
+		return sessionFactory.getCurrentSession().get(Categorie.class, idCat);
 	}
 
 	@Override
-	public List<Produit> produitsParMotCle(String mc) {
-		return sessionFactory.getCurrentSession()
-	             .createQuery("FROM produit p WHERE p.designation = :pName").setParameter("pName", mc)
-	             .list();
+	@Transactional
+	public List<Categorie> listCategorie() {
+		return sessionFactory.getCurrentSession().createQuery("FROM categorie").list();
+	}
+
+	/*________________________________________________________*/
+	/*_________________________ Produit ______________________*/
+	/*________________________________________________________*/
+	@Override
+	@Transactional
+	public void ajouterProduit(Produit p) {
+		sessionFactory.getCurrentSession().save(p);
 	}
 
 	@Override
-	public List<Produit> produitsParCategorie(Long idCat) {
-		return sessionFactory.getCurrentSession()
-	             .createQuery("FROM produit p WHERE p.idCategorie = :pIdCat").setParameter("pIdCat", idCat)
-	             .list();
-	}
-
-	@Override
-	public List<Produit> produitsSelectionnes() {
-		return sessionFactory.getCurrentSession()
-	             .createQuery("FROM produit p WHERE p.selected = :pSelect").setParameter("pSelect", "TRUE")
-	             .list();
-	}
-
-	@Override
-	public Produit getProduit(Long idP) {
-		return sessionFactory.getCurrentSession()
-				.get(Produit.class, idP);
-		
-	}
-
-	@Override
-	public void supprimerProduit(Long idP) {
-		sessionFactory.getCurrentSession().delete(getProduit(idP));
-		
-	}
-
-	@Override
+	@Transactional
 	public void modifierProduit(Produit p) {
 		sessionFactory.getCurrentSession().update(p);
-		
 	}
 
 	@Override
+	@Transactional
+	public void supprimerProduit(long idProd) {
+		sessionFactory.getCurrentSession().delete(getProduit(idProd));
+	}
+
+	@Override
+	@Transactional
+	public Produit getProduit(long idProd) {
+		return sessionFactory.getCurrentSession().get(Produit.class, idProd);
+	}
+
+	@Override
+	@Transactional
+	public List<Produit> listProduit() {
+		return sessionFactory.getCurrentSession().createQuery("FROM produit").list();
+	}
+
+	@Override
+	@Transactional
+	public List<Produit> produitsParMotCle(String mc) {
+		return sessionFactory.getCurrentSession().createQuery("FROM produit p WHERE p.designation = :pDesignation").setParameter("pDesignation", mc).list();
+	}
+
+	@Override
+	@Transactional
+	public List<Produit> produitsParCategorie(long idCat) {
+		return sessionFactory.getCurrentSession().createQuery("FROM produit p WHERE p.categorie = :pCategorie").setParameter("pCategorie", getCategorie(idCat)).list();
+	}
+
+	@Override
+	@Transactional
+	public List<Produit> produitsSelectionnes() {
+		return sessionFactory.getCurrentSession().createQuery("FROM produit p WHERE p.selected = true").list();
+	}
+
+	/*________________________________________________________*/
+	/*_____________________________ User _____________________*/
+	/*________________________________________________________*/
+	@Override
+	@Transactional
 	public void ajouterUser(User u) {
 		sessionFactory.getCurrentSession().save(u);
+	}
+
+	@Override
+	@Transactional
+	public void modifierUser(User u) {
+		sessionFactory.getCurrentSession().update(u);
+	}
+
+	@Override
+	@Transactional
+	public void supprimerUser(long idUser) {
+		sessionFactory.getCurrentSession().delete(getUser(idUser));
+	}
+
+	@Override
+	@Transactional
+	public User getUser(long idUser) {
+		return sessionFactory.getCurrentSession().get(User.class, idUser);
+	}
+
+	@Override
+	@Transactional
+	public List<User> listUsers() {
+		return sessionFactory.getCurrentSession().createQuery("FROM user").list();
+	}
+
+	@Override
+	@Transactional
+	public void attribuerRole(Role r, long userID) {
+		// TODO Auto-generated method stub
 		
 	}
 
-//	@Override
-//	public void attribuerRole(Role r, Long userID) {
-//		
-//		r = new Role();
-//		
-//		
-//	}
-
 	@Override
-	public User getUser(Long idUser) {
-		return sessionFactory.getCurrentSession()
-				.get(User.class, idUser);
+	@Transactional
+	public Commande enregistrerCommande(Panier p, Client c) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-
-//	@Override
-//	public Commande enregistrerCommande(Panier p, Client c) {
-//		return null;
-//	}
 
 }

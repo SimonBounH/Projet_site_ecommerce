@@ -7,74 +7,104 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity (name="LC")
+@Entity (name="ligneCommande")
 @Table(name="lignes_commandes")
 public class LigneCommande implements Serializable {
+	
+	/*____________________PROPS__________________________*/
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id_ligne_commande")
-	private Long id;
-	@ManyToOne
-	@JoinColumn (name="produit_id")
-	private Produit produit;
+	private long idLigneCommande;
+	
 	@Column(name = "quantite")
 	private int quantite;
+	
 	@Column(name = "prix")
 	private double prix;
 	
 	
-	@ManyToOne
-	@JoinColumn (name="commande_id")
+	//Association
 	private Commande commande;
 	
-	public LigneCommande(Long id, int quantite, double prix) {
-		super();
-		this.id = id;
-		this.quantite = quantite;
-		this.prix = prix;
-	}
-	public LigneCommande(int quantite, double prix) {
-		super();
-		this.quantite = quantite;
-		this.prix = prix;
-	}
+	private Produit produit;
+	
+	private Panier panier;
+
+	/*____________________CTOR__________________________*/
 	public LigneCommande() {
 		super();
 	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public Produit getProduit() {
-		return produit;
-	}
-	public void setProduit(Produit produit) {
+
+	public LigneCommande(int quantite, double prix, Commande commande, Produit produit, Panier panier) {
+		super();
+		this.quantite = quantite;
+		this.prix = prix;
+		this.commande = commande;
 		this.produit = produit;
+		this.panier = panier;
 	}
+
+	public LigneCommande(long idLigneCommande, int quantite, double prix, Commande commande, Produit produit,
+			Panier panier) {
+		super();
+		this.idLigneCommande = idLigneCommande;
+		this.quantite = quantite;
+		this.prix = prix;
+		this.commande = commande;
+		this.produit = produit;
+		this.panier = panier;
+	}
+
+	/*____________________ENCAPSULATION__________________________*/
+	public long getIdLigneCommande() {
+		return idLigneCommande;
+	}
+
+	public void setIdLigneCommande(long idLigneCommande) {
+		this.idLigneCommande = idLigneCommande;
+	}
+
 	public int getQuantite() {
 		return quantite;
 	}
+
 	public void setQuantite(int quantite) {
 		this.quantite = quantite;
 	}
+
 	public double getPrix() {
 		return prix;
 	}
+
 	public void setPrix(double prix) {
 		this.prix = prix;
 	}
+
 	public Commande getCommande() {
 		return commande;
 	}
+
 	public void setCommande(Commande commande) {
 		this.commande = commande;
 	}
-	
+
+	public Produit getProduit() {
+		return produit;
+	}
+
+	public void setProduit(Produit produit) {
+		this.produit = produit;
+	}
+
+	public Panier getPanier() {
+		return panier;
+	}
+
+	public void setPanier(Panier panier) {
+		this.panier = panier;
+	}
 	
 }
