@@ -6,7 +6,6 @@ import java.util.List;
 import com.intiformation.siteecommerce.modele.Categorie;
 import com.intiformation.siteecommerce.modele.Client;
 import com.intiformation.siteecommerce.modele.Commande;
-import com.intiformation.siteecommerce.modele.Panier;
 import com.intiformation.siteecommerce.modele.Produit;
 import com.intiformation.siteecommerce.modele.Role;
 import com.intiformation.siteecommerce.modele.User;
@@ -28,6 +27,6 @@ public interface IBoutiqueDAO {
 	public void modifierProduit(Produit p);
 	public void ajouterUser(User u);
 	public void attribuerRole(Role r, Long userID);
-	public Commande enregistrerCommande(Panier p, Client c);
+//	public Commande enregistrerCommande(Panier p, Client c);
 	
 }

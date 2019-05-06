@@ -1,14 +1,36 @@
 package com.intiformation.siteecommerce.modele;
 
-public class Client {
+import java.io.Serializable;
+import java.util.Collection;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity (name="client")
+@Table(name="clients")
+public class Client implements Serializable {
 	
 	/*____________________PROPS__________________________*/
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column (name = "id_client")
 	private long idClient;
+	@Column (name = "nom_client")
 	private String nomClient;
+	@Column (name = "adresse")
 	private String adresse;
+	@Column (name = "email")
 	private String email;
+	@Column (name = "telephone")
 	private String tel;
 	
+	@OneToMany(mappedBy =  "client")
+	private Collection<Commande>  commandes;
 	/*____________________CTOR__________________________*/
 	public Client() {
 		super();
@@ -39,6 +61,7 @@ public class Client {
 	public void setIdClient(long idClient) {
 		this.idClient = idClient;
 	}
+
 
 	public String getNomClient() {
 		return nomClient;
@@ -71,5 +94,17 @@ public class Client {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
+
+	public Collection<Commande> getCommandes() {
+		return commandes;
+	}
+
+	public void setCommandes(Collection<Commande> commandes) {
+		this.commandes = commandes;
+	}
+
+
+	
+	
 	
 }

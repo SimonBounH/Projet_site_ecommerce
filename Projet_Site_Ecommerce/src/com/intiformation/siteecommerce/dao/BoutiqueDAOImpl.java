@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.intiformation.siteecommerce.modele.Categorie;
 import com.intiformation.siteecommerce.modele.Client;
 import com.intiformation.siteecommerce.modele.Commande;
-import com.intiformation.siteecommerce.modele.Panier;
 import com.intiformation.siteecommerce.modele.Produit;
 import com.intiformation.siteecommerce.modele.Role;
 import com.intiformation.siteecommerce.modele.User;
@@ -134,10 +133,9 @@ public class BoutiqueDAOImpl implements IBoutiqueDAO {
 		
 	}
 
-	@Override
-	public Commande enregistrerCommande(Panier p, Client c) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public Commande enregistrerCommande(Panier p, Client c) {
+//		return null;
+//	}
 
 }
