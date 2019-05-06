@@ -39,9 +39,9 @@ public class BoutiqueDAOImpl implements IBoutiqueDAO {
 	
 	@Transactional
 	@Override
-	public Long ajouterCategorie(Categorie c) {
+	public void ajouterCategorie(Categorie c) {
 		sessionFactory.getCurrentSession().save(c);
-		return null;
+		
 	}
 
 	@Transactional(readOnly=true)
@@ -62,7 +62,7 @@ public class BoutiqueDAOImpl implements IBoutiqueDAO {
 	@Transactional
 	@Override
 	public void supprimerCategrorie(Long idcat) {
-		sessionFactory.getCurrentSession().delete(idcat);
+		sessionFactory.getCurrentSession().delete(getCategorie(idcat));
 		
 	}
 	
@@ -75,62 +75,78 @@ public class BoutiqueDAOImpl implements IBoutiqueDAO {
 	@Override
 	public Long ajouterProduit(Produit p, Long idCat) {
 		
-											
+		p = new Produit(p.getDesignation(), p.getDescription(), p.getPrix(), p.getQuantite(), p.isSelected(), p.getPhoto(), getCategorie(idCat));
+				
+		sessionFactory.getCurrentSession().save(p);							
 		return null;
 	}
 
 	@Override
 	public List<Produit> listproduits() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return sessionFactory.getCurrentSession()
+	             .createQuery("FROM produit")
+	             .list();
 	}
 
 	@Override
 	public List<Produit> produitsParMotCle(String mc) {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession()
+	             .createQuery("FROM produit p WHERE p.designation = :pName").setParameter("pName", mc)
+	             .list();
 	}
 
 	@Override
 	public List<Produit> produitsParCategorie(Long idCat) {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession()
+	             .createQuery("FROM produit p WHERE p.idCategorie = :pIdCat").setParameter("pIdCat", idCat)
+	             .list();
 	}
 
 	@Override
 	public List<Produit> produitsSelectionnes() {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession()
+	             .createQuery("FROM produit p WHERE p.selected = :pSelect").setParameter("pSelect", "TRUE")
+	             .list();
 	}
 
 	@Override
 	public Produit getProduit(Long idP) {
-		// TODO Auto-generated method stub
-		return null;
+		return sessionFactory.getCurrentSession()
+				.get(Produit.class, idP);
+		
 	}
 
 	@Override
 	public void supprimerProduit(Long idP) {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().delete(getProduit(idP));
 		
 	}
 
 	@Override
 	public void modifierProduit(Produit p) {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().update(p);
 		
 	}
 
 	@Override
 	public void ajouterUser(User u) {
-		// TODO Auto-generated method stub
+		sessionFactory.getCurrentSession().save(u);
 		
 	}
 
+//	@Override
+//	public void attribuerRole(Role r, Long userID) {
+//		
+//		r = new Role();
+//		
+//		
+//	}
+
 	@Override
-	public void attribuerRole(Role r, Long userID) {
-		// TODO Auto-generated method stub
-		
+	public User getUser(Long idUser) {
+		return sessionFactory.getCurrentSession()
+				.get(User.class, idUser);
 	}
 
 //	@Override

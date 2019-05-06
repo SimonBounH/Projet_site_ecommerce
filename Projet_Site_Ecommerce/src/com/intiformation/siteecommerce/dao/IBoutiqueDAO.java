@@ -12,7 +12,7 @@ import com.intiformation.siteecommerce.modele.User;
 
 public interface IBoutiqueDAO {
 
-	public Long ajouterCategorie (Categorie c);
+	public void ajouterCategorie (Categorie c);
 	public List<Categorie> listCategorie();
 	public Categorie getCategorie(Long idCat);
 	public void supprimerCategrorie(Long idcat);
@@ -25,8 +25,9 @@ public interface IBoutiqueDAO {
 	public Produit getProduit(Long idP);
 	public void supprimerProduit(Long idP);
 	public void modifierProduit(Produit p);
+	public User getUser(Long idUser);
 	public void ajouterUser(User u);
-	public void attribuerRole(Role r, Long userID);
+//	public void attribuerRole(Role r, Long userID);
 //	public Commande enregistrerCommande(Panier p, Client c);
 	
 }
