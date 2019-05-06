@@ -7,34 +7,36 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-<!-- ===================================================================== -->
-	<!-- ++++++++ activer la détection auto des beans (composants) +++++++++++ -->
-	<!-- ===================================================================== -->
+	<!-- ****************************************************************************** -->
+	<!-- ****** Activation de la détection automatique des beans (composant) ********** -->
+	<!-- ****************************************************************************** -->
 	<context:component-scan base-package="com.intiformation.siteecommerce"/>
 
-	
-	<!-- ============================================================ -->
-	<!-- ======= Déclaration du bean de la DataSource =============== -->
-	<!-- ============================================================ -->
+	<!-- **************************************************************** -->
+	<!-- *************** Déclaration de la DataSource ******************* -->
+	<!-- **************************************************************** -->
+
 	<bean id="dataSourceBean"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
-		<property name="url" value="db:mysql://localhost:3306/db_site_ecommerce" />
+		<property name="url" value="jdbc:mysql://localhost:3306/db_site_ecommerce" />
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
+
 	</bean>
-	
-	<!-- ============================================================ -->
-	<!-- ======= Déclaration du bean de la SessionFactory =========== -->
-	<!-- ============================================================ -->
+
+	<!-- ****************************************************************************** -->
+	<!-- *********** Déclaration du bean de la sessionFactory d'hibernate ************* -->
+	<!-- ****************************************************************************** -->
+
 	<bean id="sessionFactoryBean"
 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
 
-		<!-- injection du bean du DataSource dans le bean de la sessionFactory -->
+		<!-- Injection du bean du DataSource dans le bean de la sessionFactory -->
 		<property name="dataSource" ref="dataSourceBean" />
 
-		<!-- proriétés d'hibernates -->
+		<!-- Propriétés d'hibernates -->
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
@@ -43,38 +45,38 @@
 			</props>
 		</property>
 
-		<!-- déclaration des classes annotées avec les annotations JPA -->
+
+
+		<!-- Déclaration des classe annotées avec les annotations JPA -->
 		<property name="annotatedClasses">
 			<list>
-				<value>com.intiformation.siteecommerce.modele.*</value>
+				<value>com.intiformation.siteecommerce.modele.Categorie</value>
+				<value>com.intiformation.siteecommerce.modele.Client</value>
+				<value>com.intiformation.siteecommerce.modele.Commande</value>
+				<value>com.intiformation.siteecommerce.modele.LigneCommande</value>
+				<value>com.intiformation.siteecommerce.modele.Produit</value>
+				<value>com.intiformation.siteecommerce.modele.Role</value>
+				<value>com.intiformation.siteecommerce.modele.User</value>
 			</list>
 		</property>
+
+	</bean>
+
+	<!-- ************************** -->
+	<!-- **** Déclaration du gestionnaire des transactions de Spring **** -->
+	<!-- ************************** -->
+	<bean id="transactionManagerBean"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+
+		<!-- Association du gestionnaire à la sessionFactory (injection de la SF) -->
+		<property name="sessionFactory" ref="sessionFactoryBean"></property>
 	</bean>
 	
-	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-	<!-- ++++++++++++++  Déclaration du bean de la couche DAO   +++++++++++++++++++++++++++++++++++++ -->
-	<!-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-	<bean id="boutiqueDaoBean" class="com.intiformation.siteecommerce.dao.BoutiqueDAOImpl">
-	
-		<!-- injection du bean de la sessionFactory dans la prop 'sessionFactory' du bean dao -->
-		<property name="sessionFactory" ref="sessionFactoryBean"/>
-	</bean>
-	
-	<!-- ============================================================================ -->
-	<!-- ++++++++ Déclaration du gestionnaire des transactions de spring ++++++++++++ -->
-	<!-- ============================================================================ -->
-	<bean id="transactionManagerBean" 
-	      class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-	      
-	      <!-- association du gestionnaire à la sessionFactory (injection de la SF) -->
-	      <property name="sessionFactory" ref="sessionFactoryBean"/>
-	      
-	</bean>
-	
-	<!-- ============================================================================================== -->
-	<!-- ++++++++ Activer la détection des anntations pour les transactions (@Transactionnel)++++++++++++ -->
-	<!-- =============================================================================================== -->
-	<tx:annotation-driven transaction-manager="transactionManagerBean"/>
-	
-	
+	<!-- ****************************************************************************** -->
+	<!-- Activation dela détection des annotations pour les transaction (@Transactional) -->
+	<!-- ****************************************************************************** -->
+
+	<tx:annotation-driven transaction-manager="transactionManagerBean" />
+
+
 </beans>
