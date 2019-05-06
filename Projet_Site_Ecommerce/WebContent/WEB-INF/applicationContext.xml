@@ -57,6 +57,7 @@
 				<value>com.intiformation.siteecommerce.modele.Produit</value>
 				<value>com.intiformation.siteecommerce.modele.Role</value>
 				<value>com.intiformation.siteecommerce.modele.User</value>
+				<value>com.intiformation.siteecommerce.modele.Panier</value>
 			</list>
 		</property>
 

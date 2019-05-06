@@ -10,7 +10,7 @@
 	<!-- ===================================================================== -->
 	<!-- ++++++++ activer la détection auto des beans spring MVC ) +++++++++++ -->
 	<!-- ===================================================================== -->
-	<context:component-scan base-package="com.intiformation.siteecommerce.controller"/>
+	<context:component-scan base-package="com.intiformation.siteecommerce"/>
 	
 	<!-- ===================================================================================== -->
 	<!-- == Association des requetes à un controleur et ses méthodes gestionnaires =========== -->
